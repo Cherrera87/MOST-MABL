@@ -19,5 +19,8 @@ Aplicación interactiva para visualizar estabilidad en la capa límite marina us
 MO_marina_interactivo
 
 
-![Interpretación de flujos en la MABL](Infografia.png)
+<p align="center">
+  <img src="Infografia.png" width="600">
+</p>
+
 
