@@ -17,7 +17,7 @@ Aplicación interactiva para visualizar estabilidad en la capa límite marina us
 
 ```matlab
 MO_marina_interactivo
-
+```
 
 <p align="center">
   <img src="Infografia.png" width="600">
