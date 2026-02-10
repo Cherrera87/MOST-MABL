@@ -1,0 +1,42 @@
+\begin{thebibliography}{6}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aubinet et~al.(2012)Aubinet, Vesala, and Papale]{Aubinet2012}
+Marc Aubinet, Timo Vesala, and Dario Papale.
+\newblock \emph{Eddy Covariance: A Practical Guide to Measurement and Data
+  Analysis}.
+\newblock Springer, Dordrecht, 2012.
+
+\bibitem[Csanady(2004)]{Csanady2004}
+G.~T. Csanady.
+\newblock \emph{Air--Sea Interaction: Laws and Mechanisms}.
+\newblock Cambridge University Press, Cambridge, 2004.
+
+\bibitem[Garratt(1992)]{Garratt1992}
+J.~R. Garratt.
+\newblock \emph{The Atmospheric Boundary Layer}.
+\newblock Cambridge University Press, Cambridge, 1992.
+
+\bibitem[Kaimal and Finnigan(1994)]{Kaimal1994}
+J.~C. Kaimal and J.~J. Finnigan.
+\newblock \emph{Atmospheric Boundary Layer Flows: Their Structure and
+  Measurement}.
+\newblock Oxford University Press, New York, 1994.
+
+\bibitem[Monin and Obukhov(1954)]{Monin1954}
+A.~S. Monin and A.~M. Obukhov.
+\newblock Basic laws of turbulent mixing in the surface layer of the
+  atmosphere.
+\newblock \emph{Trudy Geofiz. Inst. Akad. Nauk SSSR}, 24:\penalty0 163--187,
+  1954.
+
+\bibitem[Stull(1988)]{Stull1988}
+Roland~B. Stull.
+\newblock \emph{An Introduction to Boundary Layer Meteorology}.
+\newblock Springer, Dordrecht, 1988.
+
+\end{thebibliography}
