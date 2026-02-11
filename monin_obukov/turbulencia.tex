@@ -1,0 +1,270 @@
+\documentclass[12pt]{book}
+
+%-------------------------------------------------
+% Paquetes
+%-------------------------------------------------
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{natbib}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+%-------------------------------------------------
+% Comandos
+%-------------------------------------------------
+\newcommand{\ustar}{u_*}
+
+%-------------------------------------------------
+\begin{document}
+%=================================================
+% SECCIÓN PARA AÑADIR: de Navier--Stokes a esfuerzos de Reynolds (RANS)
+% y derivación de la ecuación de energía cinética turbulenta (TKE)
+%=================================================
+
+\chapter{Turbulencia -- Esfuerzos de Reynolds}
+\label{sec:RANS_Reynolds}
+
+En esta sección se muestra cómo surgen los esfuerzos de Reynolds al promediar la ecuación de momento y por qué el método de \emph{eddy covariance} permite estimarlos directamente a partir de la covarianza de las fluctuaciones turbulentas \citep{Stull1988, Garratt1992, Kaimal1994, Aubinet2012}.
+
+\subsection{Ecuación instantánea de momento}
+\label{subsec:NS}
+
+Partimos de la ecuación de Navier--Stokes en notación indicial:
+\begin{equation}
+\frac{\partial u_i}{\partial t} + u_j \frac{\partial u_i}{\partial x_j}
+= -\frac{1}{\rho}\frac{\partial p}{\partial x_i}
++ \nu \frac{\partial^2 u_i}{\partial x_j^2} + f_i,
+\label{eq:NS}
+\end{equation}
+Aquí, $u_i$ es la velocidad instantánea, $p$ la presión, $\rho$ la densidad, $\nu$ la viscosidad cinemática y $f_i$ representa las fuerzas de cuerpo (o fuerzas volumétricas por unidad de masa), tales como la gravedad o la fuerza de Coriolis.
+
+Luego de presentar la ecuación instantánea, examinamos el proceso de promediado y la descomposición de Reynolds.
+
+Se define un promedio de Reynolds (temporal o de ensamble) $\overline{(\cdot)}$ y se introduce la descomposición:
+\begin{equation}
+u_i = \overline{u_i} + u_i',
+\qquad
+p = \overline{p} + p',
+\qquad
+\overline{u_i'}=0,
+\qquad
+\overline{p'}=0.
+\label{eq:Reynolds_decomp}
+\end{equation}
+Se considera que el operador de promedio es lineal y que conmuta (aproximadamente) con las derivadas espacio--temporales bajo condiciones de estacionariedad/homogeneidad en el intervalo promediado \citep{Stull1988, Garratt1992}.
+
+Continuando con el análisis de la ecuación de momento, se estudian la importancia del término no lineal y el origen de los esfuerzos de Reynolds.
+
+A partir del término advectivo \(u_j \partial_{x_j}u_i\) de la ecuación \eqref{eq:NS}, se realiza la descomposición de Reynolds \eqref{eq:Reynolds_decomp}, tal que:
+\begin{align}
+u_j\frac{\partial u_i}{\partial x_j}
+&= (\overline{u_j}+u_j')\frac{\partial (\overline{u_i}+u_i')}{\partial x_j}
+\nonumber\\
+&= \overline{u_j}\frac{\partial \overline{u_i}}{\partial x_j}
++ \overline{u_j}\frac{\partial u_i'}{\partial x_j}
++ u_j'\frac{\partial \overline{u_i}}{\partial x_j}
++ u_j'\frac{\partial u_i'}{\partial x_j}.
+\label{eq:expand_convective}
+\end{align}
+Promediando término a término y usando $\overline{u_j'}=0$ y $\overline{u_i'}=0$:
+\begin{equation}
+\overline{u_j\frac{\partial u_i}{\partial x_j}}
+=
+\overline{u_j}\frac{\partial \overline{u_i}}{\partial x_j}
++
+\overline{u_j'\frac{\partial u_i'}{\partial x_j}}.
+\label{eq:avg_convective_1}
+\end{equation}
+
+Para reescribir el último término, usamos la identidad de producto:
+\begin{equation}
+\frac{\partial (u_i' u_j')}{\partial x_j}
+=
+u_j'\frac{\partial u_i'}{\partial x_j}
++
+u_i'\frac{\partial u_j'}{\partial x_j}.
+\label{eq:product_rule}
+\end{equation}
+
+De aquí:
+\begin{equation}
+u_j'\frac{\partial u_i'}{\partial x_j}
+=
+\frac{\partial (u_i' u_j')}{\partial x_j}
+-
+u_i'\frac{\partial u_j'}{\partial x_j}.
+\label{eq:rearrange}
+\end{equation}
+
+Promediando:
+\begin{equation}
+\overline{u_j'\frac{\partial u_i'}{\partial x_j}}
+=
+\frac{\partial \overline{u_i' u_j'}}{\partial x_j}
+-
+\overline{u_i'\frac{\partial u_j'}{\partial x_j}}.
+\label{eq:avg_convective_intermediate}
+\end{equation}
+
+Bajo la condición de incompresibilidad (o aproximación de Boussinesq en la capa superficial), consideramos
+\begin{equation}
+\frac{\partial u_j'}{\partial x_j} \approx 0,
+\end{equation}
+de modo que
+\begin{equation}
+\overline{u_i'\frac{\partial u_j'}{\partial x_j}} \approx 0,
+\end{equation}
+y por tanto:
+\begin{equation}
+\overline{u_j'\frac{\partial u_i'}{\partial x_j}}
+=
+\frac{\partial \overline{u_i' u_j'}}{\partial x_j}.
+\label{eq:avg_convective_2}
+\end{equation}
+
+Sustituyendo \eqref{eq:avg_convective_2} en \eqref{eq:avg_convective_1}:
+\begin{equation}
+\overline{u_j\frac{\partial u_i}{\partial x_j}}
+=
+\overline{u_j}\frac{\partial \overline{u_i}}{\partial x_j}
++
+\frac{\partial \overline{u_i' u_j'}}{\partial x_j}.
+\label{eq:avg_convective_final}
+\end{equation}
+El término $\overline{u_i'u_j'}$  es el tensor de las correlaciones turbulentas, que representa el transporte adicional de momento por turbulencia.
+
+Una vez identificado el origen de los esfuerzos de Reynolds, presentamos la ecuación de momento promediada (RANS) y definimos el tensor de esfuerzos de Reynolds.
+
+Promediando \eqref{eq:NS} y usando \eqref{eq:avg_convective_final}:
+\begin{equation}
+\frac{\partial \overline{u_i}}{\partial t}
++
+\overline{u_j}\frac{\partial \overline{u_i}}{\partial x_j}
+=
+-\frac{1}{\rho}\frac{\partial \overline{p}}{\partial x_i}
++ \nu \frac{\partial^2 \overline{u_i}}{\partial x_j^2}
+-\frac{\partial \overline{u_i' u_j'}}{\partial x_j}
++ \overline{f_i}.
+\label{eq:RANS}
+\end{equation}
+Definimos el tensor de esfuerzos de Reynolds:
+\begin{equation}
+\tau^{(t)}_{ij} \equiv -\rho\,\overline{u_i' u_j'}.
+\label{eq:Reynolds_stress_tensor}
+\end{equation}
+En la capa superficial de la atmósfera, el término más relevante para el intercambio vertical de momento es el esfuerzo cortante turbulento:
+\begin{equation}
+\tau \equiv \tau^{(t)}_{xz} = -\rho\,\overline{u'w'},
+\qquad
+(\text{y en 3D } \; \boldsymbol{\tau} = -\rho(\overline{u'w'},\overline{v'w'})).
+\label{eq:shear_stress}
+\end{equation}
+Esto explica por qué el método de  \emph{eddy covariance} permite estimar directamente el transporte turbulento de momento: se mide $\overline{u'w'}$ (y $\overline{v'w'}$) a partir de series de alta frecuencia, obteniendo así el esfuerzo de Reynolds \citep{Kaimal1994, Aubinet2012}.
+
+%=================================================
+Con las bases anteriores, ahora derivamos la ecuación de la energía cinética turbulenta (TKE).
+
+La energía cinética turbulenta se define como:
+\begin{equation}
+e \equiv \frac{1}{2}\overline{u_i' u_i'}.
+\label{eq:TKE_def}
+\end{equation}
+La ecuación de energía cinética turbulenta (TKE) se obtiene multiplicando la ecuación de momento de las fluctuaciones por $u_i'$ y promediando \citep{Stull1988, Garratt1992, Kaimal1994}.
+
+\subsection{Ecuación de momento para las fluctuaciones}
+\label{subsec:fluct_momentum}
+
+Restando la ecuación promediada \eqref{eq:RANS} de la ecuación instantánea \eqref{eq:NS}, se obtiene la ecuación para $u_i'$ (aquí se muestra una forma estándar bajo Boussinesq e incompresibilidad para enfatizar los términos turbulentos):
+\begin{equation}
+\frac{\partial u_i'}{\partial t}
++ \overline{u_j}\frac{\partial u_i'}{\partial x_j}
++ u_j'\frac{\partial \overline{u_i}}{\partial x_j}
++ \left(u_j'\frac{\partial u_i'}{\partial x_j} - \overline{u_j'\frac{\partial u_i'}{\partial x_j}}\right)
+=
+-\frac{1}{\rho}\frac{\partial p'}{\partial x_i}
++ \nu \frac{\partial^2 u_i'}{\partial x_j^2}
++ b_i',
+\label{eq:fluct_mom}
+\end{equation}
+Aquí, $b_i'$ es la contribución fluctuante de flotabilidad (por ejemplo, en vertical, $b_3' \approx g\,\theta_v'/\theta_0$ en Boussinesq). Su forma exacta depende de la formulación termodinámica adoptada \citep{Stull1988, Garratt1992}.
+
+Como siguiente paso, multiplicamos \eqref{eq:fluct_mom} por $u_i'$ y promediamos.
+
+Multiplicamos \eqref{eq:fluct_mom} por $u_i'$ y promediamos y utilizando las identidades:
+\begin{equation}
+u_i'\frac{\partial u_i'}{\partial t} = \frac{\partial}{\partial t}\left(\frac{u_i'u_i'}{2}\right),
+\qquad
+\overline{u_i' \overline{u_j}\frac{\partial u_i'}{\partial x_j}}
+=
+\overline{u_j}\frac{\partial}{\partial x_j}\left(\frac{\overline{u_i'u_i'}}{2}\right),
+\label{eq:identities_time_adv}
+\end{equation}
+
+Tras reorganizar, se obtiene la ecuación de TKE:
+
+\subsection{Ecuación de energía cinética turbulenta (TKE)}
+\label{subsec:TKE_budget}
+
+\begin{align}
+\frac{\partial e}{\partial t}
++ \overline{u_j}\frac{\partial e}{\partial x_j}
+&=
+\underbrace{-\overline{u_i'u_j'}\frac{\partial \overline{u_i}}{\partial x_j}}_{\text{Producción por corte }(P)}
+\;+\;
+\underbrace{\overline{b_i' u_i'}}_{\text{Producción/consumo por flotabilidad }(B)}
+\;-\;
+\underbrace{\frac{\partial}{\partial x_j}\left(\frac{1}{2}\overline{u_i'u_i'u_j'}\right)}_{\text{Transporte turbulento}}
+\nonumber\\
+&\quad
+-\underbrace{\frac{1}{\rho}\frac{\partial \overline{p' u_j'}}{\partial x_j}}_{\text{Transporte por presión}}
++\underbrace{\nu\frac{\partial^2 e}{\partial x_j^2}}_{\text{Transporte viscoso}}
+-\underbrace{\nu\,\overline{\frac{\partial u_i'}{\partial x_j}\frac{\partial u_i'}{\partial x_j}}}_{\text{Disipación }(\varepsilon)}.
+\label{eq:TKE_budget}
+\end{align}
+
+En la meteorología de capa límite, el término de flotabilidad suele escribirse explícitamente como:
+\begin{equation}
+B \;=\; \frac{g}{\theta_0}\,\overline{w'\theta_v'}
+\qquad
+(\text{Boussinesq; usando temperatura virtual}).
+\label{eq:buoyancy_term}
+\end{equation}
+El término de producción por corte es el puente directo hacia la teoría de similaridad de Monin--Ovukov (MOST), ya que en capa superficial típicamente domina la contribución vertical:
+\begin{equation}
+P \approx -\overline{u'w'}\,\frac{\partial \overline{u}}{\partial z}
+\quad
+(\text{y análogo para } v).
+\label{eq:shear_production_surface}
+\end{equation}
+La importancia relativa entre la producción por corte ($P$) y la producción por flotabilidad ($B$) es precisamente la motivación física detrás de la longitud de Monin--Obukhov y del parámetro de estabilidad $z/L$ \citep{Stull1988, Garratt1992, Kaimal1994}.
+
+\subsection{Reducciones típicas en la capa superficial}
+\label{subsec:TKE_surface_layer}
+
+Bajo condiciones cercanas a la homogeneidad horizontal y la estacionariedad (aproximación de capa superficial), la ecuación de TKE \eqref{eq:TKE_budget} se simplifica a una forma 1D vertical:
+\begin{equation}
+0 \approx
+-\overline{u'w'}\,\frac{\partial \overline{u}}{\partial z}
++\frac{g}{\theta_0}\overline{w'\theta_v'}
+-\frac{\partial}{\partial z}\left(
+\frac{1}{2}\overline{u_i'u_i'w'}
++\frac{1}{\rho}\overline{p'w'}
+-\nu\frac{\partial e}{\partial z}
+\right)
+-\varepsilon,
+\label{eq:TKE_1D}
+\end{equation}
+Lo que enfatiza que, aun en la capa superficial, el balance local entre producción (corte y flotabilidad), transporte vertical y disipación depende del régimen de estabilidad \citep{Kaimal1994, Garratt1992}.
+
+
+\bibliographystyle{plainnat}
+\bibliography{referencias_MOST}
+
+\end{document}

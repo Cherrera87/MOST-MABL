@@ -1,0 +1,223 @@
+\documentclass[12pt]{article}
+
+%-------------------------------------------------
+% Paquetes
+%-------------------------------------------------
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{natbib}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+%-------------------------------------------------
+% Comandos útiles
+%-------------------------------------------------
+\newcommand{\ustar}{u_*}
+\newcommand{\zetaMO}{\zeta}
+
+%-------------------------------------------------
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Estabilidad atmosférica en la capa límite marina}}\\[0.2cm]
+{\large Teoría de Monin--Obukhov y Eddy Covariance}\\[0.3cm]
+\end{center}
+
+\vspace{0.3cm}
+
+%-------------------------------------------------
+\section{Introducción}
+
+La capa límite marina es la parte de la atmósfera directamente influenciada por el océano. Aquí, los flujos turbulentos de momento y de calor regulan el intercambio de propiedades entre el mar y el aire, definiendo el régimen de estabilidad atmosférica.
+
+Estos apuntes presentan el marco teórico para analizar la estabilidad atmosférica en la MABL a partir de mediciones de eddy covariance. Se basan en la teoría de similitud de Monin--Obukhov (MOST), que describe el equilibrio entre el forzamiento generado por el viento y los efectos de flotabilidad asociados a los flujos de calor en la capa superficial de la atmósfera \citep{Monin1954, Kaimal1994}.
+
+El análisis se centra en mediciones realizadas a una altura $z$, medida desde la superficie. Se considera que esta altura se encuentra dentro de la capa superficial de la capa límite marina, lo cual es un requisito para aplicar la teoría de similitud de Monin--Obukhov.
+
+%-------------------------------------------------
+\section{La capa superficial marina}
+
+Dentro de la MABL, la \emph{capa superficial} es la región más cercana a la superficie del océano (típicamente, entre \SIrange{10}{50}{m}), donde el intercambio turbulento de momento y calor domina la dinámica entre el océano y la atmósfera. Esta región se caracteriza por una fuerte influencia de la superficie y por escalas turbulentas relativamente pequeñas en comparación con el espesor total de la capa límite atmosférica \citep{Stull1988, Garratt1992}.
+
+En ambientes marinos, la capa superficial presenta características particulares:
+\begin{itemize}
+\item La rugosidad aerodinámica está determinada por el oleaje y el viento,
+\item Los gradientes térmicos verticales suelen ser débiles debido a la elevada inercia térmica del océano,
+\item El régimen de estabilidad cercano a la neutralidad ocurre con alta frecuencia.
+\end{itemize}
+
+Estas condiciones hacen de la capa superficial marina un entorno especialmente adecuado para analizar la interacción entre el forzamiento mecánico inducido por el viento y los efectos de flotabilidad asociados a los flujos de calor \citep{Garratt1992, Csanady2004}.
+
+%-------------------------------------------------
+\section{Teoría de similaridad de Monin--Obukhov}
+
+La teoría de Monin--Obukhov \citep{Monin1954} describe la turbulencia en la capa superficial de la atmósfera. Supone que, cerca de la superficie, la turbulencia depende de unas pocas variables clave.
+
+La aplicabilidad de MOST requiere que la capa superficial cumpla con una serie de supuestos idealizados. En primer lugar, se considera que los flujos turbulentos de momento y calor son aproximadamente constantes con la altura, lo que puede expresarse como:
+
+\begin{equation}
+\frac{\partial}{\partial z}\left(\overline{u'w'}\right) \approx 0,
+\qquad
+\frac{\partial}{\partial z}\left(\overline{w'\theta_v'}\right) \approx 0,
+\quad \text{para } 0<z\lesssim z_{sl},
+\end{equation}
+donde $z_{sl}$ denota el espesor de la capa superficial.
+
+Adicionalmente, la teoría considera homogeneidad horizontal y estacionariedad estadística en el intervalo de promediado:
+\begin{equation}
+\frac{\partial \overline{\phi}}{\partial x} \approx 0,
+\qquad
+\frac{\partial \overline{\phi}}{\partial y} \approx 0,
+\qquad
+\frac{\partial \overline{\phi}}{\partial t} \approx 0,
+\end{equation}
+donde $\phi$ representa una variable media o una covarianza turbulenta de interés.
+
+Bajo estas hipótesis, los flujos turbulentos de momento y calor pueden tratarse como escalas de superficie constantes con la altura:
+\begin{equation}
+\tau(z) \equiv -\rho\,\overline{u'w'} \approx \text{cte},
+\qquad
+H(z) \equiv \rho c_p\,\overline{w'\theta_v'} \approx \text{cte}.
+\end{equation}
+Esto permite definir la velocidad de fricción $\ustar$ y la longitud de Monin--Obukhov $L$ como parámetros centrales para describir la estabilidad en la capa superficial \citep{Stull1988, Garratt1992, Kaimal1994}.
+
+\subsection{Escalas de superficie}
+
+En la teoría de similaridad de Monin--Obukhov, la estructura turbulenta de la capa superficial se describe en términos de escalas de superficie. La intensidad del forzamiento mecánico inducido por el viento se caracteriza mediante la \emph{velocidad de fricción} $\ustar$.
+
+Por otro lado, los efectos de flotabilidad se introducen mediante el flujo turbulento de calor (idealmente en términos de temperatura virtual), incorporando el efecto de la humedad sobre la densidad del aire.
+
+\subsection{Longitud de Monin--Obukhov}
+
+La longitud de Monin--Obukhov indica a qué altura los efectos del calor y del viento se igualan. Se define como:
+\begin{equation}
+L = -\frac{\rho c_p \theta_0 \ustar^3}{\kappa g H},
+\end{equation}
+donde $\kappa \approx 0.4$ es la constante de von Kármán, $g$ la aceleración de la gravedad, $\theta_0$ la temperatura de referencia y $H$ el flujo de calor sensible.
+
+Su signo y magnitud permiten clasificar el régimen de estabilidad atmosférica:
+\begin{itemize}
+\item $L<0$: condiciones inestables (flotabilidad genera turbulencia),
+\item $L>0$: condiciones estables (flotabilidad inhibe turbulencia),
+\item $|L|\to \infty$: condiciones cercanas a la neutralidad.
+\end{itemize}
+
+En ambientes marinos con oleaje desarrollado, puede presentarse un desacople parcial entre el océano y la atmósfera, en el sentido de que una fracción del esfuerzo atmosférico se transfiere al campo de olas. Esto puede modificar la eficiencia de transferencia de momento y energía y afectar la aplicación estricta de MOST \citep{Garratt1992, Csanady2004}.
+
+%-------------------------------------------------
+\section{Estimación de flujos turbulentos medidos por Eddy Covariance}
+
+El método de \emph{eddy covariance} permite estimar los flujos turbulentos a partir de la covarianza entre fluctuaciones turbulentas de velocidad y escalares. Así, las escalas de superficie como $\ustar$ y $H$ pueden derivarse directamente de mediciones EC \citep{Stull1988, Aubinet2012}.
+
+\subsection{Flujo de momento}
+
+En el caso bidimensional, el esfuerzo cortante turbulento se expresa como:
+\begin{equation}
+\tau = -\rho \overline{u'w'}.
+\end{equation}
+Definiendo la velocidad de fricción:
+\begin{equation}
+\ustar = \sqrt{\frac{|\tau|}{\rho}}.
+\end{equation}
+
+\subsection{Flujo de calor}
+
+El flujo turbulento de calor sensible se calcula como:
+\begin{equation}
+H = \rho c_p \overline{w'\theta_v'}.
+\end{equation}
+El signo de $H$ determina el efecto de la flotabilidad:
+\begin{itemize}
+\item $H>0$: condiciones inestables,
+\item $H<0$: condiciones estables.
+\end{itemize}
+
+%-------------------------------------------------
+\section{El parámetro de estabilidad}
+
+La estabilidad relevante a una altura $z$ se caracteriza mediante:
+\begin{equation}
+\zetaMO = \frac{z}{L}.
+\end{equation}
+Este parámetro adimensional constituye la base para clasificar el régimen de estabilidad \citep{Stull1988, Garratt1992}.
+
+%-------------------------------------------------
+\section{Clasificación y régimen casi neutro}
+
+Una clasificación operativa ampliamente utilizada es \citep{Stull1988, Garratt1992}:
+\begin{center}
+\begin{tabular}{ll}
+\hline
+Régimen & Criterio \\ \hline
+Inestable & $\zetaMO < -0.1$ \\
+Casi neutro & $|\zetaMO| \le 0.1$ \\
+Estable & $\zetaMO > 0.1$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Reordenando la definición de $\zetaMO$ se obtiene:
+\begin{equation}
+\zetaMO =
+-\frac{\kappa g z}{\rho c_p \theta_0}\,
+\frac{H}{\ustar^3},
+\end{equation}
+y la condición $|\zetaMO|\le \zeta_0$ implica:
+\begin{equation}
+|H| \le
+\frac{\rho c_p \theta_0}{\kappa g}\,
+\frac{\zeta_0}{z}\,
+\ustar^3,
+\end{equation}
+lo cual muestra que la anchura del régimen casi neutro crece con $\ustar^3$ \citep{Garratt1992}.
+
+%-------------------------------------------------
+\section{Supuestos y dominio de validez de la teoría de Monin--Obukhov}
+
+MOST es una teoría asintótica cuya validez depende de hipótesis físicas bien definidas \citep{Stull1988, Garratt1992, Kaimal1994}.
+
+\begin{itemize}
+
+\item \textbf{Aplicabilidad a la capa superficial.}
+La teoría es válida únicamente cerca de la superficie, donde los flujos pueden considerarse aproximadamente constantes:
+\[
+\frac{\partial}{\partial z}\overline{u'w'} \approx 0,
+\qquad
+\frac{\partial}{\partial z}\overline{w'\theta_v'} \approx 0.
+\]
+
+\item \textbf{Constancia vertical de los flujos.}
+La aproximación de flujos constantes permite definir escalas de superficie únicas ($\ustar$, $H$).
+
+\item \textbf{Homogeneidad horizontal y estacionariedad.}
+Se requiere que el flujo sea aproximadamente homogéneo en horizontal y estacionario:
+\[
+\frac{\partial \overline{\phi}}{\partial x} \approx 0,
+\qquad
+\frac{\partial \overline{\phi}}{\partial y} \approx 0,
+\qquad
+\frac{\partial \overline{\phi}}{\partial t} \approx 0.
+\]
+Cambios abruptos de rugosidad o frentes térmicos pueden violar estas condiciones \citep{Aubinet2012}.
+
+\item \textbf{Turbulencia completamente desarrollada.}
+MOST presupone equilibrio estadístico entre producción, transporte y disipación. En condiciones muy estables puede aparecer intermitencia y fallar la similaridad \citep{Stull1988, Garratt1992}.
+
+\item \textbf{Procesos excluidos explícitamente.}
+La teoría no incorpora explícitamente rotación terrestre, subsidencia, transporte no local o efectos dinámicos del oleaje \citep{Garratt1992, Csanady2004}.
+
+\end{itemize}
+
+\bibliographystyle{plainnat}
+\bibliography{referencias_MOST}
+
+\end{document}
